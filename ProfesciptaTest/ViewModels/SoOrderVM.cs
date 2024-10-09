@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+
 namespace ProfesciptaTest.ViewModels;
 
 public class SoOrderResponseVM
@@ -13,10 +16,13 @@ public class SoOrderResponseVM
 
 public class SoOrderRequestVM
 {
-    public string OrderNo { get; set; } = null!;
+    [Required]
+    public string OrderNo { get; set; }
 
-    public DateTime OrderDate { get; set; }
+    [Required]
+    public DateTime OrderDate { get; set; } = DateTime.Now;
 
+    [Required]
     public int ComCustomerId { get; set; }
 
     public string? Address { get; set; } = null!;

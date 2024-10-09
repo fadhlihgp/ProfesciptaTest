@@ -18,7 +18,7 @@ public class SoOrderRepository : ISoOrderRepository
     public IEnumerable<SoOrder> GetAllSoOrder(string? keyword, DateTime? orderDate)
     {
         var orders = _appDbContext.SoOrders.AsQueryable();
-        orders = orders.Include(o => o.ComCustomer);
+        orders = orders.Include(o => o.ComCustomer).Include(i => i.SoItems);
         if (!string.IsNullOrEmpty(keyword))
         {
             orders = orders.Where(o => o.OrderNo.Contains(keyword) | o.ComCustomer.CustomerName.Contains(keyword));

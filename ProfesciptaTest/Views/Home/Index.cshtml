@@ -53,12 +53,14 @@
     </form>
     
     <!-- Buttons -->
-    <div class="d-flex justify-content-between mb-3">
-        <div>
-            <a href="/Home/AddNew" class="btn rounded text-white" style="background-color: #800000">Add New Data</a>
-            <button class="btn rounded text-white" style="background-color: #134B70">Export To Excel</button>
+    <form asp-action="DownloadExcel" method="post">
+        <div class="d-flex justify-content-between mb-3">
+            <div>
+                <a href="/Home/AddNew" class="btn rounded text-white" style="background-color: #800000">Add New Data</a>
+                <button type="submit" class="btn rounded text-white" style="background-color: #134B70">Export To Excel</button>
+            </div>
         </div>
-    </div>
+    </form>
     
     <!-- Table -->
     <table class="table table-striped table-bordered">
@@ -105,17 +107,4 @@
         }
         </tbody>
     </table>
-    <!-- Pagination -->
-    @* <nav aria-label="Page example" class="d-flex justify-content-between"> *@
-    @*     <ul class="pagination justify-content-start"> *@
-    @*         <li class="page-item"><a class="page-link" href="#">«</a></li> *@
-    @*         <li class="page-item"><a class="page-link" href="#">1</a></li> *@
-    @*         <li class="page-item"><a class="page-link" href="#">2</a></li> *@
-    @*         <li class="page-item"><a class="page-link" href="#">3</a></li> *@
-    @*         <li class="page-item"><a class="page-link" href="#">»</a></li> *@
-    @*     </ul> *@
-    @*     <div> *@
-    @*         <span class="text-end">1 - 10 of 28 items</span> *@
-    @*     </div> *@
-    @* </nav> *@
 </div>

@@ -14,8 +14,8 @@ public class CustomerRepository : ICustomerRepository
         _appDbContext = appDbContext;
     }
 
-    public async Task<IEnumerable<ComCustomer>> GetAllCustomers()
+    public IEnumerable<ComCustomer> GetAllCustomers()
     {
-        return await _appDbContext.ComCustomers.ToListAsync();
+        return _appDbContext.ComCustomers.ToList();
     }
 }
