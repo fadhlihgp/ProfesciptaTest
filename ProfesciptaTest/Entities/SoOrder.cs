@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace ProfesciptaTest.Entities;
@@ -16,4 +17,6 @@ public partial class SoOrder
     public string Address { get; set; } = null!;
 
     public virtual ICollection<SoItem> SoItems { get; set; } = new List<SoItem>();
+    
+    public virtual ComCustomer? ComCustomer { get; set; }
 }

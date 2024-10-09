@@ -1,14 +1,20 @@
-﻿@{
+﻿@model IEnumerable<ProfesciptaTest.Entities.SoOrder>
+
+@{
     ViewData["Title"] = "Sales Order";
     ViewData["PageTitle"] = "Sales Order";
+    var index = 1;
 }
 
 <style>
         .table th {
             background-color: #003366;
+            text-align: center;
             color: white;
         }
         .table td {
+            text-align: center;
+            font-weight: bold;
             background-color: #ffffff;
         }
         .pagination {
@@ -18,36 +24,38 @@
     
 <div class="container w-100 h-100">
     <!-- Search Form -->
-    <div class="mb-3 border border-dark p-4 pb-5 mb-2 rounded-3 mt-3">
-        <div class="row flex-row justify-content-between">
-            <div class="col-md-6">
-                <div class="row mb-3">
-                    <label for="keyword" class="col-sm-2 col-form-label">Keywords</label>
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="keyword">
+    <form method="get">
+        <div class="mb-3 border border-dark p-4 pb-5 mb-2 rounded-3 mt-3">
+            <div class="row flex-row justify-content-between">
+                <div class="col-md-6">
+                    <div class="row mb-3">
+                        <label for="keyword" class="col-sm-2 col-form-label">Keywords</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="keyword" name="keyword" value="@ViewBag.Keyword">
+                        </div>
                     </div>
-                  </div>
-            </div>
-            <div class="col-md-6">
-                <div class="row mb-3">
-                    <label for="orderdate" class="col-sm-2 col-form-label">Order Date</label>
-                    <div class="col-sm-10">
-                        <input type="date" class="form-control" id="orderdate">
+                </div>
+                <div class="col-md-6">
+                    <div class="row mb-3">
+                        <label for="orderdate" class="col-sm-2 col-form-label">Order Date</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" id="orderdate" name="orderDate" value="@ViewBag.OrderDate">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row flex-row justify-content-end">
-            <div class="col-md-6 d-flex justify-content-end">
-                <button class="btn text-white" style="background-color: #001F3F">Search</button>
+            <div class="row flex-row justify-content-end">
+                <div class="col-md-6 d-flex justify-content-end">
+                    <button type="submit" class="btn text-white" style="background-color: #001F3F">Search</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
     
     <!-- Buttons -->
     <div class="d-flex justify-content-between mb-3">
         <div>
-            <button class="btn rounded text-white" style="background-color: #800000">Add New Data</button>
+            <a href="/Home/AddNew" class="btn rounded text-white" style="background-color: #800000">Add New Data</a>
             <button class="btn rounded text-white" style="background-color: #134B70">Export To Excel</button>
         </div>
     </div>
@@ -64,60 +72,50 @@
             </tr>
         </thead>
         <tbody>
+        @foreach (var order in Model)
+        {
             <tr>
-                <td>1</td>
+                <td>@index</td>
                 <td class="d-flex justify-content-center gap-2">
-                    <button class="btn btn-link p-0"><img src="icons/edit.png" alt="edit" width="24"></button>
-                    <button class="btn btn-link p-0"><img src="/icons/trash.png" alt="delete" width="20"></button>
+                    <a href="/Home/Edit/@(order.SoOrderId)" class="btn btn-link p-0"><img src="~/icons/edit.png" alt="edit" width="24"></a>
+                    <button type="button" class="btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#order@(order.SoOrderId.ToString())"><img src="~/icons/trash.png" alt="delete" width="20"></button>
                 </td>
-                <td>50_001</td>
-                <td>24/2/2011</td>
-                <td>PROFES</td>
+                <td>@order.OrderNo</td>
+                <td>@order.OrderDate.Date.ToString("dd/MM/yyyy")</td>
+                <td>@order.ComCustomer.CustomerName</td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td class="d-flex justify-content-center gap-2">
-                    <button class="btn btn-link p-0"><img src="icons/edit.png" alt="edit" width="24"></button>
-                    <button class="btn btn-link p-0"><img src="/icons/trash.png" alt="delete" width="20"></button>
-                </td>
-                <td>50_002</td>
-                <td>24/2/2011</td>
-                <td>TITAN</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td class="d-flex justify-content-center gap-2">
-                    <button class="btn btn-link p-0"><img src="icons/edit.png" alt="edit" width="24"></button>
-                    <button class="btn btn-link p-0"><img src="/icons/trash.png" alt="delete" width="20"></button>
-                </td>
-                <td>50_003</td>
-                <td>25/2/2011</td>
-                <td>PROFES</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td class="d-flex justify-content-center gap-2">
-                    <button class="btn btn-link p-0"><img src="icons/edit.png" alt="edit" width="24"></button>
-                    <button class="btn btn-link p-0"><img src="/icons/trash.png" alt="delete" width="20"></button>
-                </td>
-                <td>50_004</td>
-                <td>26/2/2011</td>
-                <td>DIPS</td>
-            </tr>
+            index++;
+            <!-- Modal -->
+            <div class="modal fade" id="order@(order.SoOrderId.ToString())" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="oder@(order.SoOrderId.ToString())Label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body flex-column justify-content-center align-items-center gap-2 w-100">
+                            <div class="fw-bold fs-5 text-center">Do You Want to Delete ?</div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center gap-2">
+                            <form asp-action="DeleteOrder" method="post">
+                                <input type="hidden" name="id" value="@order.SoOrderId"/>
+                                <button type="submit" class="btn btn-primary">Yes</button>
+                                <button type="button" class="btn text-white" style="background-color: #c6bb33" data-bs-dismiss="modal">No</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
         </tbody>
     </table>
-
     <!-- Pagination -->
-    <nav aria-label="Page example" class="d-flex justify-content-between">
-        <ul class="pagination justify-content-start">
-            <li class="page-item"><a class="page-link" href="#">«</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">»</a></li>
-        </ul>
-        <div>
-            <span class="text-end">1 - 10 of 28 items</span>
-        </div>
-    </nav>
+    @* <nav aria-label="Page example" class="d-flex justify-content-between"> *@
+    @*     <ul class="pagination justify-content-start"> *@
+    @*         <li class="page-item"><a class="page-link" href="#">«</a></li> *@
+    @*         <li class="page-item"><a class="page-link" href="#">1</a></li> *@
+    @*         <li class="page-item"><a class="page-link" href="#">2</a></li> *@
+    @*         <li class="page-item"><a class="page-link" href="#">3</a></li> *@
+    @*         <li class="page-item"><a class="page-link" href="#">»</a></li> *@
+    @*     </ul> *@
+    @*     <div> *@
+    @*         <span class="text-end">1 - 10 of 28 items</span> *@
+    @*     </div> *@
+    @* </nav> *@
 </div>
